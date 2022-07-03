@@ -1,6 +1,5 @@
 import { Header } from './components/Header'
 import { PatientsTable } from './components/PatientsTable'
-
 import styles from './home.module.scss';
 
 interface HomeProps {

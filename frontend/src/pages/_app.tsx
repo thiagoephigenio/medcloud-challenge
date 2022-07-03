@@ -1,7 +1,9 @@
-import { AppProps } from 'next/app'
 import { useState } from 'react'
-import { PatientModal } from './components/PatientModal'
+import { AppProps } from 'next/app'
+import { ToastContainer } from 'react-toastify';
 import { PatientsProvider } from './hooks/usePatients'
+import { PatientModal } from './components/PatientModal'
+import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/global.scss'
 
 
@@ -17,7 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <PatientsProvider>
-      <Component {...pageProps} onOpenPatientModal={handleOpenPatientModal}/>
+      <ToastContainer autoClose={3000} />
+      <Component {...pageProps} onOpenPatientModal={handleOpenPatientModal} />
       <PatientModal
         isOpen={isPatientModalOpen}
         onRequestClose={handleClosePatientModal} />

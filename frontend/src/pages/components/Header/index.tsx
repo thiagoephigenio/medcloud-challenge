@@ -7,7 +7,9 @@ export function Header() {
       <header
         className={styles.headerContent}
       >
-        <Image src="/images/medcloud.svg" alt="Logo Medcloud" width={358} height={47} />
+        <span className={styles.headerImg}>
+          <Image src="/images/medcloud.svg" alt="Logo Medcloud" width={358} height={35} />
+        </span>
       </header>
     </>
   )

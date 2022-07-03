@@ -1,0 +1,13 @@
+.headerContent {
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue);
+  box-shadow: 0 0 1em var(--blue-light);
+  
+  .headerImg {
+    padding-top: 0.6rem;
+    height: 100%;
+    display: inline-block;
+  }
+}

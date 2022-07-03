@@ -1,0 +1,50 @@
+
+service: medcloud-nodeless
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: sa-east-1
+  httpApi:
+    cors: true
+
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:sa-east-1:032809776941:table/*"
+
+functions:
+  getPatients:
+    handler: handler.getPatients
+    events:
+      - httpApi:
+          method: GET
+          path: /api/patients
+  createPatient:
+    handler: handler.createPatient
+    events:
+      - httpApi:
+          method: POST
+          path: /api/patients
+  updatePatient:
+    handler: handler.updatePatient
+    events:
+      - httpApi:
+          method: PUT
+          path: /api/patients
+  removePatient:
+    handler: handler.removePatient
+    events:
+      - httpApi:
+          method: DELETE
+          path: /api/patients/{id}
