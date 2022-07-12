@@ -11,6 +11,8 @@ import {
 } from '@mui/x-date-pickers';
 import { usePatients } from '../../hooks/usePatients';
 import styles from './styles.module.scss';
+import { FormProvider, useForm } from 'react-hook-form';
+import { FormInputText } from '../FormControl/FormInputText';
 
 interface PatientModalProps {
   isOpen: boolean;
@@ -24,6 +26,25 @@ interface AddressFormatInput {
   state: string;
   zipCode: string;
 }
+
+interface IFormInput {
+  textValue: string;
+  radioValue: string;
+  checkboxValue: string[];
+  dateValue: Date;
+  dropdownValue: string;
+  sliderValue: number;
+}
+
+const defaultValues = {
+  textValue: "",
+  radioValue: "",
+  checkboxValue: [],
+  dateValue: new Date(),
+  dropdownValue: "",
+  sliderValue: 0,
+};
+
 export function PatientModal({ isOpen, onRequestClose }: PatientModalProps) {
   const { createPatient, updatePatient, selectedPatient } = usePatients();
   const [id, setId] = useState('');
@@ -137,6 +158,9 @@ export function PatientModal({ isOpen, onRequestClose }: PatientModalProps) {
     setIsValidZipCode(true);
     setIsValidBirthDate(true);
   }
+  const methods = useForm<IFormInput>({ defaultValues: defaultValues });
+  const { handleSubmit, reset, control, setValue, watch } = methods;
+  const onSubmit = (data: IFormInput) => console.log(data);
 
   return (
     <Modal
@@ -158,17 +182,23 @@ export function PatientModal({ isOpen, onRequestClose }: PatientModalProps) {
           height={40}
         />
       </button>
-      <form
+      {/* <form
         onSubmit={
           selectedPatient.id
             ? handleUpdatePatient
             : handleCreateNewPatient
         }
         className={styles.patientModalContentForm}
-      >
+      > */}
         <h2>Dados do Paciente</h2>
         <Stack spacing={2}>
-          <TextField
+          <FormProvider {...methods}>
+            <FormInputText name="textValue" control={control} label="Text Input" />
+            <FormInputText name="oi" control={control} label="Text Input2" />
+
+          </FormProvider>
+
+          {/* <TextField
             id="outlined-basic"
             label="Nome"
             variant="outlined"
@@ -277,15 +307,19 @@ export function PatientModal({ isOpen, onRequestClose }: PatientModalProps) {
             required
             value={city}
             onChange={event => setCity(event.target.value)}
-          />
-          <Button
+          /> */}
+          <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
+            {" "}
+            Submit{" "}
+          </Button>
+          {/* <Button
             type="submit"
             variant="contained"
             size="small"
             color="info"
-          > Salvar </Button>
+          > Salvar </Button> */}
         </Stack>
-      </form>
+      {/* </form> */}
     </Modal >
   )
 }
